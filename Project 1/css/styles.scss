@@ -1,0 +1,8 @@
+@import "variables";
+
+/* Set global font style */
+body {
+    background-color: $bodyColor;   
+    color: $primaryFontColor;
+    font-family: "Raleway", sans-serif;
+}
