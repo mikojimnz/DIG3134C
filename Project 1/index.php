@@ -16,11 +16,13 @@
 <body>
     <div class="content">
         <?php
+            // Include header template
             $title = 'Home';
             include 'header.php';
         ?>
         <div class="body">
             <?php 
+                // Output body content
                 foreach(file("paragraphs.txt") as $line) {
                     echo "<p>$line</p>";
                 }

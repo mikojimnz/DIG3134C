@@ -13,6 +13,23 @@ body {
     font-family: "Raleway", sans-serif;
 }
 
+button {
+    background-color: $itemColor;
+    border: none;
+    border-radius: $borderRadius;
+    color: $primaryFontColor;
+    font-size: 20px;
+    height: 35px;
+    width: 150px;
+}
+
+/* Button style */
+button:hover {
+    background-color: $accentFontColor;
+    color: #000;
+}
+
+/* Title style */
 h1,
 h2 {
     display: block;
@@ -24,6 +41,18 @@ header {
     border-bottom: $accentFontColor solid 2px;
     border-radius: $borderRadius $borderRadius 0 0;
     padding: $verticalPadding $contentPadding $verticalPadding $contentPadding;
+}
+
+/* Form input style */
+input {
+    border-radius: $borderRadius;
+    height: 25px;
+    width: 100%;
+}
+
+/*  Form label style */
+label {
+    font-size: 24px;
 }
 
 /* Navigation styling*/
@@ -55,6 +84,13 @@ nav a:hover {
 nav a.active {
     background-color: $accentFontColor;
     color: $primaryFontColor;
+}
+
+/* Form textarea style */
+textarea {
+    border-radius: $borderRadius;
+    height: 150px;
+    width: 100%;
 }
 
 /* Body content padding */
