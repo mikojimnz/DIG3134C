@@ -14,6 +14,18 @@
 </head>
 
 <body>
+    <div class="content">
+        <?php
+            $title = 'Contact';
+            include 'header.php';
+        ?>
+        <div class="body">
+            <form action="" method="post">
+                <input type="email" name="email">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

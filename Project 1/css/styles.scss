@@ -1,8 +1,72 @@
 @import "variables";
 
+
+/* Set link style */
+a {
+    color: $accentFontColor;
+}
+
 /* Set global font style */
 body {
-    background-color: $bodyColor;   
+    background-color: $bodyColor;
     color: $primaryFontColor;
     font-family: "Raleway", sans-serif;
+}
+
+h1,
+h2 {
+    display: block;
+}
+
+/* Set header style */
+header {
+    background-color: $itemColor;
+    border-bottom: $accentFontColor solid 2px;
+    border-radius: $borderRadius $borderRadius 0 0;
+    padding: $verticalPadding $contentPadding $verticalPadding $contentPadding;
+}
+
+/* Navigation styling*/
+nav {
+    background-color: $itemColor;
+    border-radius: 0 0 $borderRadius $borderRadius;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Nav link*/
+nav a {
+    color: $primaryFontColor;
+    float: left;
+    font-size: 17px;
+    padding: 14px 20px;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Nav hover */
+nav a:hover {
+    background-color: $accentFontColor;
+    color: #000;
+}
+
+/* Nav active page*/
+nav a.active {
+    background-color: $accentFontColor;
+    color: $primaryFontColor;
+}
+
+/* Body content padding */
+.body {
+    border: $itemColor solid 2px;
+    border-radius: $borderRadius;
+    margin: $verticalPadding 0 $verticalPadding 0;
+    padding: $innerPadding;
+}
+
+/* Set page content style*/
+.content {
+    margin: $verticalPadding $contentPadding $verticalPadding;
+
 }

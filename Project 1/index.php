@@ -14,7 +14,19 @@
 </head>
 
 <body>
-    <h1>Project 1</h1>
+    <div class="content">
+        <?php
+            $title = 'Home';
+            include 'header.php';
+        ?>
+        <div class="body">
+            <?php 
+                foreach(file("paragraphs.txt") as $line) {
+                    echo "<p>$line</p>";
+                }
+            ?>
+        </div>
+    </div>
 </body>
 
 </html>
