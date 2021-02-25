@@ -88,4 +88,14 @@ textarea {
 .content {
   margin: 25px 10% 25px; }
 
+#logout {
+  border: 1px solid #e0a900;
+  background: none;
+  color: #e0a900;
+  max-width: 150px; }
+
+#logout:hover {
+  background-color: #e0a900;
+  color: #fff; }
+
 /*# sourceMappingURL=styles.css.map */

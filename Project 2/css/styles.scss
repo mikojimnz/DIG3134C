@@ -106,3 +106,15 @@ textarea {
     margin: $verticalPadding $contentPadding $verticalPadding;
 
 }
+
+#logout {
+    border: 1px solid $accentFontColor;
+    background: none;
+    color: $accentFontColor;
+    max-width: 150px;
+}
+
+#logout:hover {
+    background-color: $accentFontColor;
+    color: $primaryFontColor;
+}
