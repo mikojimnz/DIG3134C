@@ -32,6 +32,7 @@
         <nav>
             <a href="./index.php">Home</a>
         </nav>
+        
         <div class="body">
 
             <div>
@@ -61,13 +62,13 @@
                     <?php } else { ?>
 
                     <label for="username">Username</label>
-                    <input type="text" placeholder="Username" name="username" id="username" required>
+                    <input type="text" placeholder="Username" name="username"required>
                     <label for="password">Password</label>
-                    <input type="password" placeholder="********" name="password" id="password" required>
+                    <input type="password" placeholder="********" name="password" required>
                     <br>
                     <button type="submit">Login</button>
                     <br>
-                    <a href="./register.php" target="_self">Create a new account</a>
+                    <a href="./register.php" target="_self">Dont have an account? Create one now!</a>
                 </form>
 
                 <?php } ?>

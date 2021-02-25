@@ -37,12 +37,14 @@ header {
 /* Form input style */
 input {
   border-radius: 10px;
+  display: block;
   height: 25px;
+  margin-bottom: 1.5em;
   width: 100%; }
 
 /*  Form label style */
 label {
-  font-size: 24px; }
+  font-size: 18px; }
 
 /* Navigation styling*/
 nav {
