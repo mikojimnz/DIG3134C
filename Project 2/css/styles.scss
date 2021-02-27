@@ -82,10 +82,19 @@ nav a:hover {
     color: #000;
 }
 
-/* Nav active page*/
+/* Nav active page */
 nav a.active {
     background-color: $accentFontColor;
     color: $primaryFontColor;
+}
+
+/* Simple table styling */
+table,
+th,
+td {
+    border: 1px solid $primaryFontColor;
+    border-collapse: collapse;
+    padding: 5px;
 }
 
 /* Form textarea style */

@@ -62,7 +62,7 @@
                             (isset($_SESSION['username']) && $_SESSION['username'] == $_POST['username'] && $_SESSION['password'] == $_POST['password'] )) {
                             
                             // Set loginToken
-                            setcookie("loginToken", "true", time() + (60 * 5), "/");
+                            setcookie("loginToken", "true", time() + (60 * 10), "/");
                             header("Refresh:0");
                         } else { ?>
                     
@@ -79,6 +79,43 @@
                     <h3>✅ You're Logged In!</h3>
                     <form method="post">
                         <input type="submit" name="logout" value="Logout" class="form-button">
+                        
+                        <?php
+                            // Define Database Login
+                            $host = "107.180.12.113";
+                            $username = "demoUser";
+                            $password = "demoPass1234$";
+                            $dbname = "DIG3134";
+
+                            // Create connection
+                            $conn = new mysqli($host, $username, $password, $dbname);
+
+                            // Check connection
+                            if ( $conn->connect_error ) {
+                                die( "Connection to database failed: " . $conn->connect_error );
+                            }
+                            
+                            $sql = "SELECT * FROM `Demo`;";
+                            $result = $conn->query($sql); // Execute query
+                            
+                            // Check for results
+                            if (!empty($result) && $result->num_rows > 0) {
+                                // Output row into table
+                                echo "<h4>Grades Sample</h4>";
+                                echo "<table><tr><th>ID</th><th>Name</th><th>Grade</th></tr>";
+                                
+                                while($row = $result->fetch_assoc()) {
+                                    echo "<tr><td>" . $row["index"]. "</td><td>" . $row["Name"]. "</td><td>" . $row["Grade"]. "</td></tr>";
+                                }
+                                
+                                echo "</table>";
+                            } else {
+                                echo "No results found";
+                            }
+                            
+                            // Close connection
+                            mysqli_close($conn);
+                        ?>
                     </form>
 
                     <?php } else { ?>
