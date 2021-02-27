@@ -109,14 +109,14 @@ textarea {
 
 }
 
-#logout {
+.form-button {
     border: 1px solid $accentFontColor;
     background: none;
     color: $accentFontColor;
     max-width: 150px;
 }
 
-#logout:hover {
+.form-button:hover {
     background-color: $accentFontColor;
     color: $primaryFontColor;
 }

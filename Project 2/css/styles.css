@@ -90,13 +90,13 @@ textarea {
 .content {
   margin: 25px 10% 25px; }
 
-#logout {
+.form-button {
   border: 1px solid #e0a900;
   background: none;
   color: #e0a900;
   max-width: 150px; }
 
-#logout:hover {
+.form-button:hover {
   background-color: #e0a900;
   color: #fff; }
 
