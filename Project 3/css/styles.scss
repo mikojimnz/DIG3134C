@@ -1,0 +1,131 @@
+@import "variables";
+
+
+/* Set link style */
+a {
+    color: $accentFontColor;
+}
+
+/* Set global font style */
+body {
+    background-color: $bodyColor;
+    color: $primaryFontColor;
+    font-family: "Raleway", sans-serif;
+}
+
+button {
+    background-color: $itemColor;
+    border: none;
+    border-radius: $borderRadius;
+    color: $primaryFontColor;
+    font-size: 20px;
+    height: 35px;
+    width: 150px;
+}
+
+/* Button style */
+button:hover {
+    background-color: $accentFontColor;
+    color: #000;
+}
+
+/* Title style */
+h1,
+h2 {
+    display: block;
+}
+
+/* Set header style */
+header {
+    background-color: $itemColor;
+    border-bottom: $accentFontColor solid 2px;
+    border-radius: $borderRadius $borderRadius 0 0;
+    padding: $verticalPadding $contentPadding $verticalPadding $contentPadding;
+}
+
+/* Form input style */
+input {
+    border-radius: $borderRadius;
+    display: block;
+    height: 25px;
+    margin-bottom: 1.5em;
+    width: 100%;
+}
+
+/*  Form label style */
+label {
+    font-size: 18px;
+}
+
+/* Navigation styling*/
+nav {
+    background-color: $itemColor;
+    border-radius: 0 0 $borderRadius $borderRadius;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+}
+
+/* Nav link*/
+nav a {
+    color: $primaryFontColor;
+    float: left;
+    font-size: 17px;
+    padding: 14px 20px;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Nav hover */
+nav a:hover {
+    background-color: $accentFontColor;
+    color: #000;
+}
+
+/* Nav active page */
+nav a.active {
+    background-color: $accentFontColor;
+    color: $primaryFontColor;
+}
+
+/* Simple table styling */
+table,
+th,
+td {
+    border: 1px solid $primaryFontColor;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+/* Form textarea style */
+textarea {
+    border-radius: $borderRadius;
+    height: 150px;
+    width: 100%;
+}
+
+/* Body content padding */
+.body {
+    border: $itemColor solid 2px;
+    border-radius: $borderRadius;
+    margin: $verticalPadding 0 $verticalPadding 0;
+    padding: $innerPadding;
+}
+
+/* Set page content style*/
+.content {
+    margin: $verticalPadding $contentPadding $verticalPadding;
+
+}
+
+.form-button {
+    border: 1px solid $accentFontColor;
+    background: none;
+    color: $accentFontColor;
+    max-width: 150px;
+}
+
+.form-button:hover {
+    background-color: $accentFontColor;
+    color: $primaryFontColor;
+}

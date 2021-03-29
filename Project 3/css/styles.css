@@ -1,0 +1,111 @@
+/* Set link style */
+a {
+  color: #e0a900; }
+
+/* Set global font style */
+body {
+  background-color: #1f1f1f;
+  color: #fff;
+  font-family: "Raleway", sans-serif; }
+
+button {
+  background-color: #505050;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 20px;
+  height: 35px;
+  width: 150px; }
+
+/* Button style */
+button:hover {
+  background-color: #e0a900;
+  color: #000; }
+
+/* Title style */
+h1,
+h2 {
+  display: block; }
+
+/* Set header style */
+header {
+  background-color: #505050;
+  border-bottom: #e0a900 solid 2px;
+  border-radius: 10px 10px 0 0;
+  padding: 25px 10% 25px 10%; }
+
+/* Form input style */
+input {
+  border-radius: 10px;
+  display: block;
+  height: 25px;
+  margin-bottom: 1.5em;
+  width: 100%; }
+
+/*  Form label style */
+label {
+  font-size: 18px; }
+
+/* Navigation styling*/
+nav {
+  background-color: #505050;
+  border-radius: 0 0 10px 10px;
+  display: block;
+  overflow: hidden;
+  width: 100%; }
+
+/* Nav link*/
+nav a {
+  color: #fff;
+  float: left;
+  font-size: 17px;
+  padding: 14px 20px;
+  text-align: center;
+  text-decoration: none; }
+
+/* Nav hover */
+nav a:hover {
+  background-color: #e0a900;
+  color: #000; }
+
+/* Nav active page */
+nav a.active {
+  background-color: #e0a900;
+  color: #fff; }
+
+/* Simple table styling */
+table,
+th,
+td {
+  border: 1px solid #fff;
+  border-collapse: collapse;
+  padding: 5px; }
+
+/* Form textarea style */
+textarea {
+  border-radius: 10px;
+  height: 150px;
+  width: 100%; }
+
+/* Body content padding */
+.body {
+  border: #505050 solid 2px;
+  border-radius: 10px;
+  margin: 25px 0 25px 0;
+  padding: 5%; }
+
+/* Set page content style*/
+.content {
+  margin: 25px 10% 25px; }
+
+.form-button {
+  border: 1px solid #e0a900;
+  background: none;
+  color: #e0a900;
+  max-width: 150px; }
+
+.form-button:hover {
+  background-color: #e0a900;
+  color: #fff; }
+
+/*# sourceMappingURL=styles.css.map */
