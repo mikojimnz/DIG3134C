@@ -11,7 +11,7 @@
         if(array_key_exists('logout', $_POST)) {
             
             // Delete loginToken cookie
-            setcookie("loginToken", "", time() - 3600, "/");
+            unset($_SESSION['loggedin']);
             header("Refresh:0");
             
             // Destroy Session
@@ -41,7 +41,7 @@
 <body>
     <div class="content">
         <header>
-            <h1>Project 2 – Account Registration</h1>
+            <h1>Project 3 – Account Registration</h1>
             <hr>
             <h2>Miko Jimenez</h2>
         </header>
@@ -51,7 +51,7 @@
         <div class="body">
             <?php
                 // Check is a login has been created
-                if(isset($_SESSION['username'])) { ?>
+                if(isset($_SESSION['loggedin'])) { ?>
             
                     <!-- Display success message -->
                     <h3>You have successfully created an account, <?php echo $_SESSION['username'] ?>.</h3>
@@ -63,7 +63,7 @@
                 <?php } else { ?>
             
                     <!-- Show account creaiton form-->
-                    <form method="post">
+                    <form method="post" action="connect.php">
                         
                     <?php
                         // Account creation logic
