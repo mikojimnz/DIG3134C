@@ -1,31 +1,40 @@
 <?php
+    session_start();
+
     // Define Database Login
     $host = "107.180.12.113";
-    $username = "demoUser";
+    $username = "demoProject3";
     $password = "demoPass1234$";
     $dbname = "DIG3134";
 
-    if ($_SERVER["REQUEST_METHOD"] != "POST")  die("Invalid Method");
+    if ($_SERVER["REQUEST_METHOD"] != "POST") die("Invalid Method");
+
+    if (isset($_SESSION['errs'])) unset($_SESSION['errs']);
+    $_SESSION['errs'] = array();
 
     switch($_POST) {
         case(array_key_exists('login', $_POST)):
-            checkLogin();
-            // header("Location: index.php"); 
+            check_login();
+            header("Location: index.php"); 
             break;
         case(array_key_exists('register', $_POST)):
-            setLogin();
-            // header("Location: index.php"); 
+            set_login();
+            header("Location: register.php"); 
             break;
         case(array_key_exists('delete', $_POST)):
-            deleteLogin();
-            // header("Location: index.php"); 
+            delete_login();
+        case(array_key_exists('logout', $_POST)):
+            session_destroy();
+            header("Location: index.php"); 
+            break;
+        case(array_key_exists('home', $_POST)):
+            header("Location: index.php");
             break;
         default:
-            die("Invalid request made");
             break;
         }
 
-    function getLogin() {
+    function get_login() {
         global $host, $username, $password, $dbname;
 
         // Create connection
@@ -35,18 +44,32 @@
         if ( $conn->connect_error ) {
             die( "Connection to database failed: " . $conn->connect_error );
         }
-        
-        $sql = "INSERT INTO `Users`;";
-        $result = $conn->query($sql); // Execute query
 
-        // Close connection
-        mysqli_close($conn);
+        $stmt = $conn->prepare("SELECT `username` FROM `Project3` WHERE `username` = ?;"); // Execute query
+        $stmt->bind_param("s", $_POST['username']); // Add variables to statement
+        $stmt->execute(); // Execute statement
+        $result = $stmt->get_result(); // Get result
+        $row = mysqli_fetch_array($result);
+        mysqli_close($conn); // Close connection
 
-        return true;
+        // Check for normal result
+        if ($result->num_rows == 0) return true;
+
+        return false;
     }
 
-    function setLogin() {
+    function set_login() {
         global $host, $username, $password, $dbname;
+
+        // Validate form fields before continuing
+        if (registration_validation()) {
+            $_SESSION['loggedIn'] = false;
+            unset($_SESSION['username']);
+            header("Location: register.php");
+            exit();
+        }
+
+        $key = date_timestamp_get(date_create());
 
         // Encrypt password
         $passHash = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -59,18 +82,20 @@
             die( "Connection to database failed: " . $conn->connect_error );
         }
         
-        $sql = "INSERT INTO `Project3` (`id`, `username`, `password`, `email`) VALUES (?, ?, ?, ?);";
-        $stmt = $conn->prepare($sql); // Prepare statement
-        $stmt->bind_param("isss", date_timestamp_get(date_create()), $_POST['username'], $passHash, $_POST['email']); // Add variables to statement
+        $stmt = $conn->prepare("INSERT INTO `Project3` (`id`, `username`, `password`, `email`) VALUES (?, ?, ?, ?);"); // Prepare statement
+        $stmt->bind_param("isss", $key, $_POST['username'], $passHash, $_POST['email']); // Add variables to statement
         $stmt->execute(); // Execute statement
 
         // Close connection
         mysqli_close($conn);
 
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $_POST['username'];
+
         return true;
     }
 
-    function deleteLogin() {
+    function delete_login() {
         global $host, $username, $password, $dbname;
 
         // Create connection
@@ -81,18 +106,15 @@
             die( "Connection to database failed: " . $conn->connect_error );
         }
         
-        $sql = "DELETE FROM `Project3` WHERE `username` = ? ;";
-        $stmt = $conn->prepare($sql); // Prepare statement
+        $stmt = $conn->prepare("DELETE FROM `Project3` WHERE `username` = ? ;"); // Prepare statement
         $stmt->bind_param("s", $_POST['username']); // Add variables to statement
         $stmt->execute(); // Execute statement
-
-        // Close connection
-        mysqli_close($conn);
+        mysqli_close($conn); // Close connection
 
         return true;
     }
 
-    function checkLogin() {
+    function check_login() {
         global $host, $username, $password, $dbname;
         
         // Create connection
@@ -103,31 +125,82 @@
             die( "Connection to database failed: " . $conn->connect_error );
         }
         
-        $sql = "SELECT `password` from `Project3` WHERE `username` = ?";
-        $stmt = $conn->prepare($sql); // Prepare statement
+        $stmt = $conn->prepare("SELECT `password` from `Project3` WHERE `username` = ?"); // Prepare statement
         $stmt->bind_param("s", $_POST['username']); // Add variables to statement
         $stmt->execute(); // Execute statement
         $result = $stmt->get_result(); // Get result
         $row = mysqli_fetch_array($result);
 
-        echo($result->num_rows);
-        echo($row);
+        // Check for normal result
+        if ($result->num_rows != 1) {
+            array_push($_SESSION['errs'], "❌ User not found!");
+            header("Location: index.php");
+            exit();
+        }
 
-        // if ($result->num_rows != 1) {
-        //     $_SESSION['err_msg'] = "Unexpexted Error! Query return more than 1 result.";
-        //     header("Location: index.php");
-        // }
+        echo ($_POST['password'] == $row[0]);
 
-        
-
-        // if (password_verify($_POST['password'], $result)) {
-        //     // Set session state
-        //     $_SESSION['loggedin'] = true;
-        // }
+        if (password_verify($_POST['password'], $row[0])) {
+            // Set session state
+            $_SESSION['loggedin'] = true;
+            $_SESSION['username'] = $_POST['username'];
+        } else {
+            array_push($_SESSION['errs'], "❌ Wrong Password!");
+            header("Location: index.php");
+            exit();
+        }
 
         // Close connection
         mysqli_close($conn);
 
         return true;
+    }
+
+    function registration_validation() {
+        // Simple email regex
+        $emailReg = "/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+.[a-zA-Z]{2,}$/"; 
+
+        // Username regex
+        $usernameReg = "/^[a-zA-Z0-9_]{5,20}$/"; 
+
+        // Password regex
+        // 8-32 characters
+        // At least 1 lowercase character
+        // At least 1 uppercase character
+        // At least 1 special character
+        $passwordReg = "/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?\/\~_+-=\|]).{8,32}$/";
+
+        $err = false;
+
+        // Check for valid email
+        if (!preg_match($emailReg, $_POST['email'])) {
+            array_push($_SESSION['errs'],  '❌ Invalid Email');
+            $err = true;
+        } 
+
+        // Check for valid username
+        if (!preg_match($usernameReg, $_POST['username'])) {
+            array_push($_SESSION['errs'],  '❌ Invalid Username. Usernames must be 5-20 characters and consist of letters, numbers, and underscores only.');
+            $err = true;
+        } 
+
+        // Check for valid password
+        if (!preg_match($passwordReg, $_POST['password'])) {
+            array_push($_SESSION['errs'],  '❌ Weak Password. Passwords must be 8-32 characters long, include 1 lowercase, 1 uppercase, and 1 special character.');
+            $err = true;
+        } 
+
+        // Check for marching password
+        if ($_POST['confirmPassword'] != $_POST['password']) {
+            array_push($_SESSION['errs'],  '❌ Passwords don\'t match!');
+            $err = true;
+        }
+
+        if (!get_login()) {
+            array_push($_SESSION['errs'],  '❌ Username already taken!');
+            $err = true;
+        }
+        
+        return $err;
     }
 ?>

@@ -5,21 +5,6 @@
 <?php
     // Start new session
     session_start();
-    
-    // Listen for post method
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        
-        // Check if logout was called
-        if(array_key_exists('logout', $_POST)) {
-            
-            // Delete loginToken cookie
-            unset($_SESSION['loggedin']);
-            header("Refresh:0");
-            
-            // Destroy Session
-            session_destroy ();
-        }
-    }
 ?>
 
 <head>
@@ -52,9 +37,9 @@
             
             <div>
                 <!-- Show logged in content -->
-                <h3>✅ You're Logged In!</h3>
-                <form method="post" >
-                    <input type="submit" name="logout" value="logout" class="form-button">
+                <h3>✅ You're Logged In, <?php echo $_SESSION['username'] ?>!</h3>
+                <form method="post" action="connect.php">
+                    <input type="submit" name="logout" value="Logout" class="form-button">
                 </form>
                 
                 <!-- Do Something here-->
@@ -65,6 +50,15 @@
             <div>
                 <form method="post" action="connect.php">
                     
+                    <?php
+
+                    if (isset($_SESSION['errs'])) {
+                        foreach ($_SESSION['errs'] as $err) {
+                            echo ("<p>$err</p>");
+                        }
+                    }
+
+                    ?>
                     
                     <!-- If not logged in, show login form -->
                     <label for="username">Username</label>
@@ -72,7 +66,7 @@
                     <label for="password">Password</label>
                     <input type="password" placeholder="********" name="password" required>
                     <br>
-                    <button type="submit" name="login" value="login">Login</button>
+                    <button type="submit" name="login">Login</button>
                     <br>
                     
                     <!-- Account creation form-->
