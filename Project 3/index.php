@@ -40,9 +40,11 @@
                 <h3>✅ You're Logged In, <?php echo $_SESSION['username'] ?>!</h3>
                 <form method="post" action="connect.php">
                     <input type="submit" name="logout" value="Logout" class="form-button">
+                    <input type="submit" name="delete" value="Delete Account" class="form-button">
                 </form>
                 
-                <!-- Do Something here-->
+                <!-- Do something here-->
+                <?php include("element.php"); ?>
             </div>
 
         <?php } else { ?>
@@ -52,10 +54,14 @@
                     
                     <?php
 
+                    // Display any errors
                     if (isset($_SESSION['errs'])) {
                         foreach ($_SESSION['errs'] as $err) {
                             echo ("<p>$err</p>");
                         }
+
+                        // Clear error log
+                        unset($_SESSION['errs']);
                     }
 
                     ?>

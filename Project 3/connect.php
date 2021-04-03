@@ -7,30 +7,34 @@
     $password = "demoPass1234$";
     $dbname = "DIG3134";
 
+    // Check request type
     if ($_SERVER["REQUEST_METHOD"] != "POST") die("Invalid Method");
 
+    // Clear previous errors
     if (isset($_SESSION['errs'])) unset($_SESSION['errs']);
     $_SESSION['errs'] = array();
 
+    // Call appropraite methods
     switch($_POST) {
-        case(array_key_exists('login', $_POST)):
+        case(array_key_exists('login', $_POST)): // Login
             check_login();
             header("Location: index.php"); 
             break;
-        case(array_key_exists('register', $_POST)):
+        case(array_key_exists('register', $_POST)): // Regiser account
             set_login();
             header("Location: register.php"); 
             break;
-        case(array_key_exists('delete', $_POST)):
+        case(array_key_exists('delete', $_POST)): // Delete account
             delete_login();
-        case(array_key_exists('logout', $_POST)):
+        case(array_key_exists('logout', $_POST)): // Logout of account
             session_destroy();
             header("Location: index.php"); 
             break;
-        case(array_key_exists('home', $_POST)):
+        case(array_key_exists('home', $_POST)): // Return home
             header("Location: index.php");
             break;
         default:
+            die("Invalid Method");
             break;
         }
 
@@ -69,6 +73,7 @@
             exit();
         }
 
+        // Create entry id based on current unix time
         $key = date_timestamp_get(date_create());
 
         // Encrypt password
@@ -85,14 +90,10 @@
         $stmt = $conn->prepare("INSERT INTO `Project3` (`id`, `username`, `password`, `email`) VALUES (?, ?, ?, ?);"); // Prepare statement
         $stmt->bind_param("isss", $key, $_POST['username'], $passHash, $_POST['email']); // Add variables to statement
         $stmt->execute(); // Execute statement
-
-        // Close connection
-        mysqli_close($conn);
+        mysqli_close($conn); // Close connection
 
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $_POST['username'];
-
-        return true;
     }
 
     function delete_login() {
@@ -107,11 +108,9 @@
         }
         
         $stmt = $conn->prepare("DELETE FROM `Project3` WHERE `username` = ? ;"); // Prepare statement
-        $stmt->bind_param("s", $_POST['username']); // Add variables to statement
+        $stmt->bind_param("s", $_SESSION['username']); // Add variables to statement
         $stmt->execute(); // Execute statement
         mysqli_close($conn); // Close connection
-
-        return true;
     }
 
     function check_login() {
@@ -130,6 +129,7 @@
         $stmt->execute(); // Execute statement
         $result = $stmt->get_result(); // Get result
         $row = mysqli_fetch_array($result);
+        mysqli_close($conn); // Close connection
 
         // Check for normal result
         if ($result->num_rows != 1) {
@@ -138,8 +138,7 @@
             exit();
         }
 
-        echo ($_POST['password'] == $row[0]);
-
+        // Check password
         if (password_verify($_POST['password'], $row[0])) {
             // Set session state
             $_SESSION['loggedin'] = true;
@@ -149,11 +148,6 @@
             header("Location: index.php");
             exit();
         }
-
-        // Close connection
-        mysqli_close($conn);
-
-        return true;
     }
 
     function registration_validation() {
@@ -196,6 +190,7 @@
             $err = true;
         }
 
+        // Check if username is already taken
         if (!get_login()) {
             array_push($_SESSION['errs'],  '❌ Username already taken!');
             $err = true;

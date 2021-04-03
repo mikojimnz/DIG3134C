@@ -77,7 +77,7 @@ nav a.active {
 table,
 th,
 td {
-  border: 1px solid #fff;
+  border: 0px solid #fff;
   border-collapse: collapse;
   padding: 5px; }
 
