@@ -10,8 +10,8 @@
 <head>
     <meta charset="utf-8">
 
-    <title>Project 3 - Account Registration</title>
-    <meta name="description" content="Project 3 - Home">
+    <title>Project 4 - Account Registration</title>
+    <meta name="description" content="Project 4 - Home">
     <meta name="author" content="Miko Jimenez">
 
     <link rel="stylesheet" href="css/styles.css">
