@@ -21,7 +21,7 @@
 <body>
     <div class="content">
         <header>
-            <h1>Project 3 – Databases, Sessions, and Encryption</h1>
+            <h1>Project 4 – Database CRUD</h1>
             <hr>
             <h2>Miko Jimenez</h2>
         </header>

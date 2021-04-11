@@ -38,8 +38,25 @@
             break;
         }
 
+    // Input sanitization function
+    function sanatize_inp(String $inp) {
+
+        switch ($inp) {
+            case "email":
+                $_POST[$inp] = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+            case "username":
+            case "password":
+                $_POST[$inp] = trim($_POST[$inp]);
+                $_POST[$inp] = strip_tags($_POST[$inp]);
+                break;
+            default:
+                break;
+        }
+    }
+
     function get_login() {
         global $host, $username, $password, $dbname;
+        $userCheck = array();
 
         // Create connection
         $conn = new mysqli($host, $username, $password, $dbname);
@@ -54,12 +71,22 @@
         $stmt->execute(); // Execute statement
         $result = $stmt->get_result(); // Get result
         $row = mysqli_fetch_array($result);
+
+        // Check for normal result
+        if ($result->num_rows != 0) array_push($userCheck, "username");
+
+
+        $stmt = $conn->prepare("SELECT `email` FROM `Project3` WHERE `email` = ?;"); // Execute query
+        $stmt->bind_param("s", $_POST['email']); // Add variables to statement
+        $stmt->execute(); // Execute statement
+        $result = $stmt->get_result(); // Get result
+        $row = mysqli_fetch_array($result);
         mysqli_close($conn); // Close connection
 
         // Check for normal result
-        if ($result->num_rows == 0) return true;
+        if ($result->num_rows != 0) array_push($userCheck, "email");
 
-        return false;
+        return $userCheck;
     }
 
     function set_login() {
@@ -72,6 +99,10 @@
             header("Location: register.php");
             exit();
         }
+
+        sanatize_inp("username");
+        sanatize_inp("password");
+        sanatize_inp("email");
 
         // Create entry id based on current unix time
         $key = date_timestamp_get(date_create());
@@ -123,6 +154,9 @@
         if ( $conn->connect_error ) {
             die( "Connection to database failed: " . $conn->connect_error );
         }
+
+        sanatize_inp("username");
+        sanatize_inp("password");
         
         $stmt = $conn->prepare("SELECT `password` from `Project3` WHERE `username` = ?"); // Prepare statement
         $stmt->bind_param("s", $_POST['username']); // Add variables to statement
@@ -191,8 +225,14 @@
         }
 
         // Check if username is already taken
-        if (!get_login()) {
+        if (in_array("username", get_login())) {
             array_push($_SESSION['errs'],  '❌ Username already taken!');
+            $err = true;
+        }
+
+        // Check if email is already taken
+        if (in_array("email", get_login())) {
+            array_push($_SESSION['errs'],  '❌ Email already registered!');
             $err = true;
         }
         

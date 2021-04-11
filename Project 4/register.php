@@ -21,7 +21,7 @@
 <body>
     <div class="content">
         <header>
-            <h1>Project 3 – Account Registration</h1>
+            <h1>Project 4 – Account Registration</h1>
             <hr>
             <h2>Miko Jimenez</h2>
         </header>
