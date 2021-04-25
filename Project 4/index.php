@@ -38,11 +38,8 @@
             <div>
                 <!-- Show logged in content -->
                 <h3>✅ You're Logged In, <?php echo $_SESSION['username'] ?>!</h3>
-                <form method="post" action="connect.php">
-                    <input type="submit" name="logout" value="Logout" class="form-button">
-                    <input type="submit" name="delete" value="Delete Account" class="form-button">
-                </form>
-                
+                <div><button onclick="window.location.href='logout.php'" class="link-button">Logout</button></div>
+                <div><button onclick="window.location.href='delete.php'" class="link-button">Delete Account</button></div>
                 <!-- Do something here-->
                 <?php include("element.php"); ?>
             </div>

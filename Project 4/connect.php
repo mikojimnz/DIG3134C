@@ -7,9 +7,6 @@
     $password = "demoPass1234$";
     $dbname = "DIG3134";
 
-    // Check request type
-    if ($_SERVER["REQUEST_METHOD"] != "POST") die("Invalid Method");
-
     // Clear previous errors
     if (isset($_SESSION['errs'])) unset($_SESSION['errs']);
     $_SESSION['errs'] = array();
@@ -27,11 +24,8 @@
         case(array_key_exists('delete', $_POST)): // Delete account
             delete_login();
         case(array_key_exists('logout', $_POST)): // Logout of account
-            session_destroy();
+            include('logout.php');
             header("Location: index.php"); 
-            break;
-        case(array_key_exists('home', $_POST)): // Return home
-            header("Location: index.php");
             break;
         default:
             die("Invalid Method");
@@ -74,7 +68,6 @@
 
         // Check for normal result
         if ($result->num_rows != 0) array_push($userCheck, "username");
-
 
         $stmt = $conn->prepare("SELECT `email` FROM `Project3` WHERE `email` = ?;"); // Execute query
         $stmt->bind_param("s", $_POST['email']); // Add variables to statement

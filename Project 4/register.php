@@ -35,11 +35,9 @@
             
                     <!-- Display success message -->
                     <h3>You have successfully created an account, <?php echo $_SESSION['username'] ?>.</h3>
-                    <form method="post" action="connect.php">
-                        <input type="submit" name="home" value="Return Home" class="form-button">
-                        <input type="submit" name="logout" value="Logout" class="form-button">
-                        <input type="submit" name="delete" value="Delete Account" class="form-button">
-                    </form>
+                    <div><button onclick="window.location.href='index.php'" class="link-button">Home</button></div>
+                    <div><button onclick="window.location.href='logout.php'" class="link-button">Logout</button></div>
+                    <div><button onclick="window.location.href='delete.php'" class="link-button">Delete Account</button></div>
             
                 <?php } else { ?>
             
