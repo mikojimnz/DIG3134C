@@ -2,8 +2,6 @@
 <table>
 <?php
 
-$_SESSION["username"] = "mikojimnz";
-
 // Generate table
 for($i = 0; $i < strlen($_SESSION['username']); $i++) {
     echo ("<tr>");
